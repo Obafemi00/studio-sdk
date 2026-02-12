@@ -1,0 +1,8 @@
+# Placeholder Images
+
+This directory should contain:
+- work-1.jpg through work-6.jpg (portfolio images)
+- sav.jpg (team member image)
+- team-2.jpg, team-3.jpg (additional team images)
+
+For now, these are referenced but not included. Replace with actual images.

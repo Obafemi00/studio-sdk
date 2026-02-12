@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
+/* Design Tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sdk-white: #FFFFFF;
+  --sdk-dark: #2B2B2B;
+  --sdk-gray-700: #4A4A4A;
+  --sdk-gray-200: #E6E6E6;
+  --sdk-gray-100: #F7F7F7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-sdk-white: var(--sdk-white);
+  --color-sdk-dark: var(--sdk-dark);
+  --color-sdk-gray-700: var(--sdk-gray-700);
+  --color-sdk-gray-200: var(--sdk-gray-200);
+  --color-sdk-gray-100: var(--sdk-gray-100);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--sdk-white);
+  color: var(--sdk-dark);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Scale */
+.font-display {
+  font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
+}
+
+.text-h1 {
+  font-size: 4rem; /* 64px */
+  line-height: 1.125; /* 72px */
+  font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
+}
+
+.text-h2 {
+  font-size: 3rem; /* 48px */
+  line-height: 1.167; /* 56px */
+  font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
+}
+
+.text-h3 {
+  font-size: 2rem; /* 32px */
+  line-height: 1.25; /* 40px */
+  font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
+}
+
+.text-h4 {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.333; /* 32px */
+  font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
+}
+
+.text-body {
+  font-size: 1rem; /* 16px */
+  line-height: 1.75; /* 28px */
+  font-family: var(--font-body), 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+.text-small {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.714; /* 24px */
+  font-family: var(--font-body), 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .text-h1 {
+    font-size: 3rem; /* 48px */
+    line-height: 1.167; /* 56px */
+  }
+  
+  .text-h2 {
+    font-size: 2.5rem; /* 40px */
+    line-height: 1.2; /* 48px */
+  }
+}
+
+/* Spacing System - 8px base scale */
+/* Section padding: 64-96px mobile, 96-140px desktop */
+
+/* Bottom padding for pill nav */
+main {
+  padding-bottom: 80px;
+}
+
+@media (min-width: 640px) {
+  main {
+    padding-bottom: 100px;
+  }
+}
+
+/* Safe area support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  main {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+  
+  @media (min-width: 640px) {
+    main {
+      padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    }
+  }
 }
