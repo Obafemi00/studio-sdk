@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import HeroMedia from "@/components/sections/case-study/HeroMedia";
@@ -36,7 +35,6 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
   return (
     <>
-      <Navbar />
       <PageTransition>
         <main>
           <HeroMedia

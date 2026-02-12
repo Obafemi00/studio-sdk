@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, RefObject } from "react";
+import { useLayoutEffect, useRef, RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerScrollTrigger } from "./gsap";
@@ -12,39 +12,39 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
   const ref = useRef<T | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (!enabled || prefersReducedMotion) return;
+  useLayoutEffect(() => {
+    if (!enabled || prefersReducedMotion || !ref.current) return;
+    
     registerScrollTrigger();
 
     const element = ref.current;
-    if (!element) return;
 
-    gsap.fromTo(
-      element,
-      {
-        opacity: 0,
-        y: 12,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: element,
-          start: "top 85%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse",
+    const ctx = gsap.context(() => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.fromTo(
+        element,
+        {
+          autoAlpha: 0,
+          y: 12,
         },
-      }
-    );
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }, ref);
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === element) {
-          trigger.kill();
-        }
-      });
+      ctx.revert(); // Safely removes triggers and inline styles
     };
   }, [enabled, prefersReducedMotion]);
 

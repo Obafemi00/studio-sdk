@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import IntroStatement from "@/components/sections/about/IntroStatement";
@@ -9,7 +8,6 @@ import ServicesList from "@/components/sections/about/ServicesList";
 export default function About() {
   return (
     <>
-      <Navbar />
       <PageTransition>
         <main>
           <IntroStatement />

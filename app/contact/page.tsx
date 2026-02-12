@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import Container from "@/components/ui/Container";
@@ -19,7 +18,6 @@ export default function Contact() {
 
   return (
     <>
-      <Navbar />
       <PageTransition>
         <main>
         <section className="py-16 md:py-24 lg:py-[96px] xl:py-[140px]">
