@@ -53,14 +53,14 @@ export default function HeroSection() {
           <div className="max-w-3xl text-white">
             <h1 className="text-h1 mb-6 tracking-tight">
               Crafting Digital Excellence
-            </h1>
+          </h1>
             <p className="text-body mb-8 text-white/80 max-w-xl">
               We create minimal, powerful experiences that resonate.
-            </p>
-            <Link href="/contact">
+          </p>
+          <Link href="/contact">
               <Button variant="primary">Start a Project</Button>
-            </Link>
-          </div>
+          </Link>
+        </div>
         </Container>
       </div>
     </section>

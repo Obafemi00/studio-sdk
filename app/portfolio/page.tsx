@@ -6,9 +6,9 @@ export default function Portfolio() {
   return (
     <>
       <PageTransition>
-        <main>
-          <PortfolioGridSection />
-        </main>
+      <main>
+        <PortfolioGridSection />
+      </main>
       </PageTransition>
       <Footer />
     </>

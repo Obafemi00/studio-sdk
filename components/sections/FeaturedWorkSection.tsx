@@ -4,23 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { useRevealOnScroll } from "@/lib/useRevealOnScroll";
+import { projects } from "@/lib/projects";
 
-interface WorkCard {
-  id: string;
-  title: string;
-  mediaType: "image" | "video";
-  mediaSrc: string;
-  slug: string;
-}
-
-const featuredWork: WorkCard[] = [
-  { id: "1", title: "Project Alpha", mediaType: "image", mediaSrc: "/images/work-1.jpg", slug: "project-alpha" },
-  { id: "2", title: "Project Beta", mediaType: "video", mediaSrc: "/videos/work-2.mp4", slug: "project-beta" },
-  { id: "3", title: "Project Gamma", mediaType: "image", mediaSrc: "/images/work-3.jpg", slug: "project-gamma" },
-  { id: "4", title: "Project Delta", mediaType: "image", mediaSrc: "/images/work-4.jpg", slug: "project-delta" },
-  { id: "5", title: "Project Epsilon", mediaType: "video", mediaSrc: "/videos/work-5.mp4", slug: "project-epsilon" },
-  { id: "6", title: "Project Zeta", mediaType: "image", mediaSrc: "/images/work-6.jpg", slug: "project-zeta" },
-];
+// Featured work is first 6 projects
+const featuredWork = projects.slice(0, 6);
 
 export default function FeaturedWorkSection() {
   const revealRef = useRevealOnScroll<HTMLElement>();

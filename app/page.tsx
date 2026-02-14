@@ -19,8 +19,8 @@ export default function Home() {
           <ServicesSection />
           <ClientsSection />
           <BigCtaSection />
-          <GiantWordmarkSection />
-        </main>
+          <GiantWordmarkSection/>
+        </main> 
       </PageTransition>
       <Footer />
     </>

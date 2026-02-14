@@ -52,7 +52,7 @@ body {
   font-size: 1.5rem; /* 24px */
   line-height: 1.333; /* 32px */
   font-family: var(--font-display), 'Didot', 'Bodoni Moda', 'Playfair Display', serif;
-}
+  }
 
 .text-body {
   font-size: 1rem; /* 16px */

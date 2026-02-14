@@ -1,127 +1,102 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Container from "@/components/ui/Container";
-import { registerScrollTrigger } from "@/lib/gsap";
+import { useEffect, useRef, useState } from "react";
+import { Rocket, ArrowUp, TrendingUp } from "lucide-react";
 import { useReducedMotion } from "@/lib/motion";
 
 const words = [
-  { id: 1, word: "Launch", icon: "🚀" },
-  { id: 2, word: "Elevate", icon: "⬆️" },
-  { id: 3, word: "Scale", icon: "📈" },
+  { id: 1, word: "Launch", Icon: Rocket },
+  { id: 2, word: "Elevate", Icon: ArrowUp },
+  { id: 3, word: "Scale", Icon: TrendingUp },
 ];
 
 export default function ThreeWordsSection() {
-  const containerRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [progress, setProgress] = useState(0);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion || !containerRef.current) return;
-    
-    registerScrollTrigger();
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setProgress(1);
+      return;
+    }
 
-    const ctx = gsap.context(() => {
-      gsap.registerPlugin(ScrollTrigger);
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
 
-      const rows = gsap.utils.toArray<HTMLElement>("[data-threeword-row]");
-      
-      if (rows.length === 0) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const sectionHeight = sectionRef.current.offsetHeight;
+      const viewportHeight = window.innerHeight;
 
-      // Set initial hidden state
-      gsap.set(rows, { autoAlpha: 0, y: 16 });
+      const totalScrollable = sectionHeight - viewportHeight;
+      const current = Math.min(
+        Math.max(-rect.top, 0),
+        totalScrollable
+      );
 
-      // Create timeline with scroll scrub - sequential reveal
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          end: "+=140%",
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.3,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+      const p = totalScrollable > 0 ? current / totalScrollable : 0;
+      setProgress(p);
+    };
 
-      // Sequential staggered reveal: row1 -> row2 -> row3
-      tl.to(rows[0], {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      })
-        .to(
-          rows[1],
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.4,
-            ease: "power2.out",
-          },
-          ">0.15"
-        )
-        .to(
-          rows[2],
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.4,
-            ease: "power2.out",
-          },
-          ">0.15"
-        );
-    }, containerRef);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
 
     return () => {
-      ctx.revert(); // Safely removes pins, triggers, and inline styles
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, [prefersReducedMotion]);
 
+  // Each row locks into position progressively
+  const getRowProgress = (index: number) => {
+    const phase = 1 / 3;
+    const start = index * phase;
+    const end = start + phase;
+
+    if (progress >= end) return 1;
+    if (progress <= start) return 0;
+
+    return (progress - start) / phase;
+  };
+
   return (
     <section
-      ref={containerRef}
-      className="relative flex min-h-screen items-center justify-center bg-white py-8 md:py-12"
+      ref={sectionRef}
+      className="relative bg-white"
+      style={{
+        height: prefersReducedMotion ? "auto" : "180vh", // reduced height (less dead space)
+      }}
     >
-      <Container>
-        <div className="space-y-16 md:space-y-24">
-          <div
-            data-threeword-row
-            className="word-row flex flex-col items-center gap-4 md:flex-row md:gap-8"
-          >
-            <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-[#E6E6E6] bg-transparent text-4xl md:h-24 md:w-24 md:text-5xl">
-              {words[0].icon}
-            </div>
-            <h2 className="text-5xl font-display tracking-tight md:text-7xl lg:text-8xl" style={{ fontFamily: "var(--font-display)" }}>
-              {words[0].word}
-            </h2>
-          </div>
-          <div
-            data-threeword-row
-            className="word-row flex flex-col items-center gap-4 md:flex-row md:gap-8"
-          >
-            <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-[#E6E6E6] bg-transparent text-4xl md:h-24 md:w-24 md:text-5xl">
-              {words[1].icon}
-            </div>
-            <h2 className="text-5xl font-display tracking-tight md:text-7xl lg:text-8xl" style={{ fontFamily: "var(--font-display)" }}>
-              {words[1].word}
-            </h2>
-          </div>
-          <div
-            data-threeword-row
-            className="word-row flex flex-col items-center gap-4 md:flex-row md:gap-8"
-          >
-            <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-[#E6E6E6] bg-transparent text-4xl md:h-24 md:w-24 md:text-5xl">
-              {words[2].icon}
-            </div>
-            <h2 className="text-5xl font-display tracking-tight md:text-7xl lg:text-8xl" style={{ fontFamily: "var(--font-display)" }}>
-              {words[2].word}
-            </h2>
-          </div>
+      <div className="sticky top-0 flex h-screen items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-14 md:gap-20">
+          {words.map((item, index) => {
+            const rowProgress = prefersReducedMotion
+              ? 1
+              : getRowProgress(index);
+
+            const opacity = rowProgress;
+            const translateY = (1 - rowProgress) * 60;
+
+            return (
+              <div
+                key={item.id}
+                className="flex items-center gap-6 md:gap-10"
+                style={{
+                  opacity,
+                  transform: `translateY(${translateY}px)`,
+                }}
+              >
+                <item.Icon className="h-10 w-10 text-[#2B2B2B] md:h-14 md:w-14" />
+
+                <h2 className="text-6xl font-display tracking-tight md:text-8xl lg:text-9xl">
+                  {item.word}
+                </h2>
+              </div>
+            );
+          })}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

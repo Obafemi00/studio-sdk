@@ -24,6 +24,11 @@ const bodoniModa = Bodoni_Moda({
 export const metadata: Metadata = {
   title: "Studio SDK",
   description: "Premium minimal portfolio",
+  icons: {
+    icon: "/light-logo.png",
+    shortcut: "/light-logo.png",
+    apple: "/light-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${inter.variable} ${playfairDisplay.variable} ${bodoniModa.variable} antialiased`}
         style={{
           fontFamily: "var(--font-body)",
