@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import { useStaggerReveal } from "@/lib/useStaggerReveal";
 
 const services = [
   {
@@ -16,7 +19,9 @@ const services = [
   },
 ];
 
-export default function ServicesSection() {
+export default function AboutServices() {
+  const staggerRef = useStaggerReveal<HTMLDivElement>(0.1);
+
   return (
     <section className="bg-white py-16 md:py-24 lg:py-32">
       <Container>
@@ -27,7 +32,7 @@ export default function ServicesSection() {
           >
             Services
           </h2>
-          <div className="grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
+          <div ref={staggerRef} className="grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
             {services.map((service, index) => (
               <div
                 key={index}

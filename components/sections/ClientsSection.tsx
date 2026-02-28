@@ -1,37 +1,50 @@
 import Image from "next/image";
-import Container from "@/components/ui/Container";
 
 const clientLogos = [
-  { name: "Client 1", logo: "/client-logos/client-1.png" },
-  { name: "Client 2", logo: "/client-logos/client-2.png" },
-  { name: "Client 3", logo: "/client-logos/client-3.png" },
-  { name: "Client 4", logo: "/client-logos/client-4.png" },
-  { name: "Client 5", logo: "/client-logos/client-5.png" },
-  { name: "Client 6", logo: "/client-logos/client-6.png" },
+  { src: "/client-logos/beauty-creations.png", alt: "Beauty Creations" },
+  { src: "/client-logos/Meta_lockup_positive primary_RGB.png", alt: "Meta" },
+  { src: "/client-logos/LYS LOGO FINAL stacked BLACK OL.png", alt: "LYS Beauty" },
+  { src: "/client-logos/Canva-Logo.png", alt: "Canva" },
+  { src: "/client-logos/Wallmart-Wordmark-Standard-TrueBlue-RGB.png", alt: "Walmart" },
+  { src: "/client-logos/Popeyes_Logo_2020.svg", alt: "Popeyes" },
 ];
 
 export default function ClientsSection() {
   return (
-    <section className="py-16 md:py-24 lg:py-[96px] xl:py-[140px] bg-[#F7F7F7]">
-      <Container>
-        <h2 className="text-h2 mb-16 tracking-tight">Brands That Trust Us</h2>
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
-          {clientLogos.map((client, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-center grayscale transition-opacity duration-300 hover:opacity-60"
-            >
-              <Image
-                src={client.logo}
-                alt={client.name}
-                width={120}
-                height={60}
-                className="h-auto w-full max-w-[120px] object-contain opacity-50"
-              />
-            </div>
-          ))}
+    <section className="relative min-h-screen overflow-x-hidden bg-[#F6F4EF]">
+      <div className="mx-auto max-w-6xl px-6 flex min-h-screen flex-col overflow-x-hidden">
+        <header className="pt-16">
+          <h2 className="font-display text-3xl md:text-4xl tracking-tight text-[#2B2B2B]">
+            Brands That Trust Us
+          </h2>
+        </header>
+
+        <div className="flex-1 flex flex-col items-center justify-center mt-16">
+          <div
+            className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-3 justify-items-center items-center"
+            style={{
+              rowGap: "3rem",
+              columnGap: "4rem",
+              minWidth: 0,
+            }}
+          >
+            {clientLogos.map((client, index) => (
+              <div
+                key={index}
+                className="group flex items-center justify-center min-w-0 w-full"
+              >
+                <Image
+                  src={client.src}
+                  alt={client.alt}
+                  width={160}
+                  height={60}
+                  className="h-[60px] w-auto max-w-[160px] object-contain grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.02]"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

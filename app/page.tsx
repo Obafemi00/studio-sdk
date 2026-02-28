@@ -3,9 +3,8 @@ import PageTransition from "@/components/PageTransition";
 import HeroSection from "@/components/sections/HeroSection";
 import FeaturedWorkSection from "@/components/sections/FeaturedWorkSection";
 import ThreeWordsSection from "@/components/sections/ThreeWordsSection";
-import ServicesSection from "@/components/sections/ServicesSection";
 import ClientsSection from "@/components/sections/ClientsSection";
-import BigCtaSection from "@/components/sections/BigCtaSection";
+import MillionUsersCtaSection from "@/components/sections/MillionUsersCtaSection";
 import GiantWordmarkSection from "@/components/sections/GiantWordmarkSection";
 
 export default function Home() {
@@ -16,9 +15,8 @@ export default function Home() {
           <HeroSection />
           <FeaturedWorkSection />
           <ThreeWordsSection />
-          <ServicesSection />
           <ClientsSection />
-          <BigCtaSection />
+          <MillionUsersCtaSection />
           <GiantWordmarkSection/>
         </main> 
       </PageTransition>

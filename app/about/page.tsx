@@ -1,19 +1,29 @@
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import IntroStatement from "@/components/sections/about/IntroStatement";
-import StudioPhilosophy from "@/components/sections/about/StudioPhilosophy";
-import TeamGrid from "@/components/sections/about/TeamGrid";
-import ServicesList from "@/components/sections/about/ServicesList";
+import AboutHero from "@/components/sections/about/AboutHero";
+import AboutPillars from "@/components/sections/about/AboutPillars";
+import AboutSplit from "@/components/sections/about/AboutSplit";
+import AboutServices from "@/components/sections/about/AboutServices";
+import AboutValues from "@/components/sections/about/AboutValues";
+import AboutQuote from "@/components/sections/about/AboutQuote";
+import AboutTeam from "@/components/sections/about/AboutTeam";
+import AboutTrustedBy from "@/components/sections/about/AboutTrustedBy";
+import AboutFinalCta from "@/components/sections/about/AboutFinalCta";
 
 export default function About() {
   return (
     <>
       <PageTransition>
         <main>
-          <IntroStatement />
-          <StudioPhilosophy />
-          <TeamGrid />
-          <ServicesList />
+          <AboutHero />
+          <AboutPillars />
+          <AboutSplit />
+          <AboutServices />
+          <AboutValues />
+          <AboutQuote />
+          <AboutTeam />
+          <AboutTrustedBy />
+          <AboutFinalCta />
         </main>
       </PageTransition>
       <Footer />

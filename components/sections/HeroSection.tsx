@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "../ui/Button";
@@ -36,6 +37,17 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-[#2B2B2B]">
+      {/* Top-left logo */}
+      <div className="fixed top-6 left-6 z-50 md:top-6 md:left-6">
+        <Image
+          src="/logo-dark.png"
+          alt="Studio SDK"
+          width={720}
+          height={240}
+          className="h-32 w-auto md:h-48"
+          priority
+        />
+      </div>
       <video
         ref={videoRef}
         autoPlay

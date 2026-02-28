@@ -17,6 +17,11 @@
   --color-sdk-gray-100: var(--sdk-gray-100);
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--sdk-white);
   color: var(--sdk-dark);
