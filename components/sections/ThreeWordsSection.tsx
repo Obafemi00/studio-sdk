@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Rocket, ArrowUp, TrendingUp } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,14 +17,13 @@ const rowsData = [
 export default function ThreeWordsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const spacerRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<HTMLDivElement[]>([]);
   const prefersReducedMotion = useReducedMotion();
-  const [debugProgress, setDebugProgress] = useState(0);
-  const triggerRef = useRef<ScrollTrigger | null>(null);
 
   useLayoutEffect(() => {
     if (prefersReducedMotion) return;
-    if (!sectionRef.current || !pinRef.current) return;
+    if (!sectionRef.current || !pinRef.current || !spacerRef.current) return;
 
     registerScrollTrigger();
     gsap.registerPlugin(ScrollTrigger);
@@ -33,60 +32,40 @@ export default function ThreeWordsSection() {
       const rows = rowRefs.current.filter(Boolean);
       if (rows.length !== 3) return;
 
-      // QuickSetters for performance/stability
-      const opacitySetters = rows.map((row) => gsap.quickSetter(row, "opacity"));
-      const ySetters = rows.map((row) => gsap.quickSetter(row, "y"));
+      // IMPORTANT: force a known initial state
+      gsap.set(rows, { autoAlpha: 0, y: 60 });
 
-      // Helper
-      const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
-
-      // Kill any previous trigger for this section
-      if (triggerRef.current) {
-        triggerRef.current.kill();
-        triggerRef.current = null;
-      }
-
-      const trigger = ScrollTrigger.create({
-        trigger: sectionRef.current!,
-        start: "top top",
-        end: "+=240%",
-        scrub: true,
-        pin: pinRef.current!,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const p = self.progress; // 0..1
-          setDebugProgress(p);
-
-          // 3 equal segments
-          const r1 = clamp01(p / 0.3333);
-          const r2 = clamp01((p - 0.3333) / 0.3333);
-          const r3 = clamp01((p - 0.6666) / 0.3334);
-
-          const vals = [r1, r2, r3];
-
-          vals.forEach((v, i) => {
-            opacitySetters[i](v);
-            ySetters[i]((1 - v) * 56); // from below into place
-          });
+      // Create a step-based timeline: each row gets its own segment and never animates out
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: sectionRef.current!,
+          start: "top top",
+          // End when spacer finishes passing viewport bottom
+          endTrigger: spacerRef.current!,
+          end: "bottom top",
+          pin: pinRef.current!,
+          pinSpacing: true,
+          scrub: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
-      triggerRef.current = trigger;
+      // 3 segments: 0-1, 1-2, 2-3
+      tl.to(rows[0], { autoAlpha: 1, y: 0, duration: 1 }, 0);
+      tl.to(rows[1], { autoAlpha: 1, y: 0, duration: 1 }, 1);
+      tl.to(rows[2], { autoAlpha: 1, y: 0, duration: 1 }, 2);
+
+      ScrollTrigger.refresh();
     }, sectionRef);
 
-    return () => {
-      if (triggerRef.current) {
-        triggerRef.current.kill();
-        triggerRef.current = null;
-      }
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [prefersReducedMotion]);
 
   return (
     <section ref={sectionRef} className="relative bg-white">
-      {/* Pinned viewport */}
+      {/* Pinned viewport (exactly 100vh) */}
       <div ref={pinRef} className="flex h-screen items-center justify-center">
         <Container>
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-10 md:gap-14 lg:gap-16">
@@ -100,10 +79,9 @@ export default function ThreeWordsSection() {
                 style={
                   prefersReducedMotion
                     ? { opacity: 1, transform: "translateY(0)" }
-                    : { opacity: 0, transform: "translateY(56px)" }
+                    : undefined
                 }
               >
-                {/* Transparent icon container: no background tile */}
                 <div className="flex h-16 w-16 items-center justify-center md:h-20 md:w-20">
                   <Icon className="h-10 w-10 text-[#2B2B2B] md:h-12 md:w-12" />
                 </div>
@@ -119,10 +97,9 @@ export default function ThreeWordsSection() {
           </div>
         </Container>
       </div>
-      {/* Debug overlay for ScrollTrigger progress */}
-      <div className="fixed bottom-4 left-4 z-[9999] rounded bg-black/70 px-2 py-1 text-xs text-white">
-        ThreeWords p={debugProgress.toFixed(3)}
-      </div>
+
+      {/* Explicit scroll distance (THIS controls the scrub length) */}
+      <div ref={spacerRef} aria-hidden className="h-[220vh]" />
     </section>
   );
 }
