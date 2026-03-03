@@ -24,27 +24,22 @@ export default function PageTransition({ children }: PageTransitionProps) {
 
     const container = containerRef.current;
 
-    // Animate in
+    // Animate in (opacity only to avoid transforms on scroll ancestors)
     gsap.fromTo(
       container,
-      {
-        opacity: 0,
-        y: 8,
-      },
+      { opacity: 0 },
       {
         opacity: 1,
-        y: 0,
         duration: 0.6,
         ease: "power2.out",
       }
     );
 
     return () => {
-      // Animate out on route change
+      // Animate out on route change (opacity only)
       if (container) {
         gsap.to(container, {
           opacity: 0,
-          y: -8,
           duration: 0.4,
           ease: "power2.out",
         });
