@@ -12,8 +12,8 @@ export default function PillNav() {
     if (path === "/") {
       return pathname === "/";
     }
-    if (path === "/portfolio") {
-      return pathname === "/portfolio" || pathname.startsWith("/portfolio/");
+    if (path === "/work") {
+      return pathname === "/work" || pathname.startsWith("/work/");
     }
     return pathname === path;
   };
@@ -72,16 +72,16 @@ export default function PillNav() {
         </Link>
 
         <Link
-          href="/portfolio"
-          onClick={(e) => handleNavClick(e, "/portfolio")}
-          onKeyDown={(e) => handleKeyDown(e, "/portfolio")}
+          href="/work"
+          onClick={(e) => handleNavClick(e, "/work")}
+          onKeyDown={(e) => handleKeyDown(e, "/work")}
           className={`rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors sm:px-4 sm:text-base ${
-            isActive("/portfolio")
+            isActive("/work")
               ? "bg-[#4A4A4A]"
               : "hover:bg-[#4A4A4A]/50"
           }`}
         >
-          Portfolio
+          Work
         </Link>
 
         <Link

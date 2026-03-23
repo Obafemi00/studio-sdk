@@ -14,7 +14,7 @@ export default function ProjectNav({ prevProject, nextProject }: ProjectNavProps
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {prevProject ? (
             <Link
-              href={`/portfolio/${prevProject.slug}`}
+              href={`/work/${prevProject.slug}`}
               className="group block transition-opacity duration-300 hover:opacity-60"
             >
               <div className="flex items-center gap-4">
@@ -30,7 +30,7 @@ export default function ProjectNav({ prevProject, nextProject }: ProjectNavProps
           )}
           {nextProject && (
             <Link
-              href={`/portfolio/${nextProject.slug}`}
+              href={`/work/${nextProject.slug}`}
               className="group block transition-opacity duration-300 hover:opacity-60 md:ml-auto"
             >
               <div className="flex items-center justify-end gap-4">

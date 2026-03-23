@@ -22,7 +22,7 @@ export default function AboutPillars() {
   const staggerRef = useStaggerReveal<HTMLDivElement>(0.12);
 
   return (
-    <section className="bg-white py-16 md:py-24 lg:py-32">
+    <section className="bg-white py-14 md:py-20 lg:py-28">
       <Container>
         <div ref={staggerRef} className="mx-auto max-w-5xl">
           <div className="grid gap-12 md:grid-cols-3 md:gap-8">

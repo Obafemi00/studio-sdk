@@ -4,39 +4,55 @@ import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { useStaggerReveal } from "@/lib/useStaggerReveal";
 
-const clients = [
-  { name: "BEAUTY CREATIONS", logo: "/client-logos/beauty-creations.png" },
-  { name: "LYS BEAUTY", logo: "/client-logos/LYS LOGO FINAL stacked BLACK OL.png" },
-  { name: "MGAE", logo: "/client-logos/Canva-Logo.png" }, // Using Canva as placeholder for MGAE
-  { name: "CANVA", logo: "/client-logos/Canva-Logo.png" },
-  { name: "WALMART", logo: "/client-logos/Wallmart-Wordmark-Standard-TrueBlue-RGB.png" },
-  { name: "POPEYES", logo: "/client-logos/Popeyes_Logo_2020.svg" },
-  { name: "META", logo: "/client-logos/Meta_lockup_positive primary_RGB.png" },
-];
+/** Unique entries only — dedupe by logo path (same file = one slot). */
+const clientsRaw = [
+  { name: "Beauty Creations", logo: "/client-logos/beauty-creations.png" },
+  { name: "LYS Beauty", logo: "/client-logos/LYS LOGO FINAL stacked BLACK OL.png" },
+  { name: "Canva", logo: "/client-logos/Canva-Logo.png" },
+  { name: "Walmart", logo: "/client-logos/Wallmart-Wordmark-Standard-TrueBlue-RGB.png" },
+  { name: "Popeyes", logo: "/client-logos/Popeyes_Logo_2020.svg" },
+  { name: "Meta", logo: "/client-logos/Meta_lockup_positive primary_RGB.png" },
+] as const;
+
+function dedupeByLogo<T extends { logo: string }>(items: readonly T[]): T[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    if (seen.has(item.logo)) return false;
+    seen.add(item.logo);
+    return true;
+  });
+}
+
+const clients = dedupeByLogo(clientsRaw);
 
 export default function AboutTrustedBy() {
   const staggerRef = useStaggerReveal<HTMLDivElement>(0.08);
 
   return (
-    <section className="bg-white py-16 md:py-24 lg:py-32">
+    <section className="bg-white py-14 md:py-20 lg:py-28">
       <Container>
-        <div className="mx-auto max-w-5xl">
-          <p className="mb-12 text-center text-sm uppercase tracking-wider text-[#4A4A4A] md:mb-16">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-10 text-center text-sm uppercase tracking-wider text-[#4A4A4A] md:mb-12">
             Trusted by leading brands
           </p>
-          <div ref={staggerRef} className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-7">
-            {clients.map((client, index) => (
+          <div
+            ref={staggerRef}
+            className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6"
+          >
+            {clients.map((client) => (
               <div
-                key={index}
-                className="flex items-center justify-center opacity-60 grayscale transition-opacity hover:opacity-100 hover:grayscale-0"
+                key={client.logo}
+                className="flex min-h-[4.5rem] items-center justify-center px-2"
               >
-                <Image
-                  src={client.logo}
-                  alt={client.name}
-                  width={120}
-                  height={60}
-                  className="h-auto w-full max-w-[120px] object-contain"
-                />
+                <div className="group flex h-12 w-full max-w-[140px] items-center justify-center md:h-14">
+                  <Image
+                    src={client.logo}
+                    alt={client.name}
+                    width={160}
+                    height={64}
+                    className="h-10 w-auto max-h-12 max-w-full object-contain opacity-55 grayscale transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 md:h-12"
+                  />
+                </div>
               </div>
             ))}
           </div>

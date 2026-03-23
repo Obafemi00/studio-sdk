@@ -11,7 +11,7 @@ export default function NextProjectNav({ nextSlug, nextTitle }: NextProjectNavPr
     <section className="border-t border-[#E6E6E6] py-16 md:py-24">
       <Container>
         <Link
-          href={`/portfolio/${nextSlug}`}
+          href={`/work/${nextSlug}`}
           className="group block transition-opacity duration-300 hover:opacity-60"
         >
           <div className="flex items-center justify-between">

@@ -20,7 +20,7 @@ export default function FeaturedWorkSection() {
           {featuredWork.map((item) => (
             <Link
               key={item.id}
-              href={`/portfolio/${item.slug}`}
+              href={`/work/${item.slug}`}
               className="group block overflow-hidden transition-transform duration-300 hover:scale-[1.02]"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7F7F7]">

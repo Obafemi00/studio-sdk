@@ -23,7 +23,7 @@ export default function AboutServices() {
   const staggerRef = useStaggerReveal<HTMLDivElement>(0.1);
 
   return (
-    <section className="bg-white py-16 md:py-24 lg:py-32">
+    <section className="bg-white py-14 md:py-20 lg:py-28">
       <Container>
         <div className="mx-auto max-w-5xl">
           <h2

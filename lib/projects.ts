@@ -17,7 +17,7 @@ export interface Project {
   results?: string;
 }
 
-// Single source of truth for all portfolio projects
+// Single source of truth for all work / case study projects
 export const projects: Project[] = [
   {
     id: "1",
