@@ -94,11 +94,11 @@ export default function HeroSection() {
         aria-hidden
       />
 
-      {/* Top-left logo */}
-      <div className="fixed top-6 left-6 z-50 md:top-6 md:left-6">
+      {/* Top-left logo (non-sticky; scrolls with page) */}
+      <div className="absolute left-6 top-6 z-20 md:left-6 md:top-6">
         <Image
-          src="/light-logo.png"
-          alt="Studio SDK logo"
+          src="/Studio SDK White Transparent BG.png"
+          alt="Studio SDK Logo"
           width={180}
           height={60}
           className="h-32 w-auto md:h-48"

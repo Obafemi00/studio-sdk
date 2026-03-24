@@ -6,13 +6,39 @@ import Container from "@/components/ui/Container";
 import { useRevealOnScroll } from "@/lib/useRevealOnScroll";
 import { projects } from "@/lib/projects";
 
+function getYouTubeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace("www.", "");
+
+    if (host === "youtu.be") {
+      const id = parsed.pathname.split("/").filter(Boolean)[0];
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (parsed.pathname === "/watch") {
+        const id = parsed.searchParams.get("v");
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+      if (parsed.pathname.startsWith("/shorts/")) {
+        const id = parsed.pathname.split("/").filter(Boolean)[1];
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 export default function PortfolioGridSection() {
   const revealRef = useRevealOnScroll<HTMLElement>();
 
   return (
     <section ref={revealRef} className="py-16 md:py-24 lg:py-[96px] xl:py-[140px]">
       <Container>
-        <h1 className="text-h2 mb-16 tracking-tight">Portfolio</h1>
+        <h1 className="text-h2 mb-16 tracking-tight">Work</h1>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {projects.map((item) => (
             <Link
@@ -28,6 +54,14 @@ export default function PortfolioGridSection() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : getYouTubeEmbedUrl(item.mediaSrc) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(item.mediaSrc) || undefined}
+                    title={item.title}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
                   />
                 ) : (
                   <video

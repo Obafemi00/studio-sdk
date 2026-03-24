@@ -4,7 +4,6 @@ import PageTransition from "@/components/PageTransition";
 import HeroMedia from "@/components/sections/case-study/HeroMedia";
 import ProjectInfo from "@/components/sections/case-study/ProjectInfo";
 import Gallery from "@/components/sections/case-study/Gallery";
-import ResultsText from "@/components/sections/case-study/ResultsText";
 import ProjectNav from "@/components/sections/case-study/ProjectNav";
 import { projects, getProjectBySlug, getProjectIndex } from "@/lib/projects";
 
@@ -27,28 +26,36 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const nextIndex = (currentIndex + 1) % total;
   const prevProject = projects[prevIndex];
   const nextProject = projects[nextIndex];
+  const galleryItems = project.gallery || [];
+  const firstVideoInGallery = galleryItems.find((item) => item.mediaType === "video");
+  const detailVideo = project.heroMediaType === "video"
+    ? { mediaType: "video" as const, mediaSrc: project.heroMediaSrc || project.mediaSrc }
+    : firstVideoInGallery
+      ? { mediaType: "video" as const, mediaSrc: firstVideoInGallery.mediaSrc }
+      : null;
+  const imageGalleryItems = galleryItems.filter((item) => item.mediaType === "image");
+  const fallbackHeroMediaType = project.heroMediaType || project.mediaType;
+  const fallbackHeroMediaSrc = project.heroMediaSrc || project.mediaSrc;
 
   return (
     <>
       <PageTransition>
         <main>
-          <HeroMedia
-            mediaType={project.heroMediaType || project.mediaType}
-            mediaSrc={project.heroMediaSrc || project.mediaSrc}
-            alt={project.title}
-          />
-          <ProjectInfo
-            title={project.title}
-            role={project.role || "Creative Direction, Design"}
-            tools={project.tools || ["Figma", "After Effects", "Cinema 4D"]}
-          />
-          <Gallery items={project.gallery || []} />
-          <ResultsText
-            content={
-              project.results ||
-              "This project delivered exceptional results, exceeding client expectations and establishing a new standard for digital experiences."
-            }
-          />
+          {detailVideo ? (
+            <HeroMedia
+              mediaType={detailVideo.mediaType}
+              mediaSrc={detailVideo.mediaSrc}
+              alt={project.title}
+            />
+          ) : (
+            <HeroMedia
+              mediaType={fallbackHeroMediaType}
+              mediaSrc={fallbackHeroMediaSrc}
+              alt={project.title}
+            />
+          )}
+          <ProjectInfo title={project.title} />
+          <Gallery items={imageGalleryItems} />
           <ProjectNav prevProject={prevProject} nextProject={nextProject} />
         </main>
       </PageTransition>

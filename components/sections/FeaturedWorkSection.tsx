@@ -9,6 +9,32 @@ import { projects } from "@/lib/projects";
 // Featured work is first 6 projects
 const featuredWork = projects.slice(0, 6);
 
+function getYouTubeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace("www.", "");
+
+    if (host === "youtu.be") {
+      const id = parsed.pathname.split("/").filter(Boolean)[0];
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (parsed.pathname === "/watch") {
+        const id = parsed.searchParams.get("v");
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+      if (parsed.pathname.startsWith("/shorts/")) {
+        const id = parsed.pathname.split("/").filter(Boolean)[1];
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 export default function FeaturedWorkSection() {
   const revealRef = useRevealOnScroll<HTMLElement>();
 
@@ -31,6 +57,14 @@ export default function FeaturedWorkSection() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : getYouTubeEmbedUrl(item.mediaSrc) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(item.mediaSrc) || undefined}
+                    title={item.title}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
                   />
                 ) : (
                   <video
