@@ -39,29 +39,29 @@ export default function HeroSection() {
     if (!showVideo || prefersReducedMotion) return;
     const v = videoRef.current;
     if (!v) return;
+    v.muted = true;
     v.play().catch(() => {});
   }, [showVideo, prefersReducedMotion]);
 
+  // Failsafe if native loop does not fire or stalls
   useEffect(() => {
     if (!showVideo || prefersReducedMotion) return;
     const v = videoRef.current;
     if (!v) return;
 
-    const onTimeUpdate = () => {
-      if (!v.duration || !Number.isFinite(v.duration)) return;
-      if (v.currentTime > v.duration - 0.28) {
-        v.currentTime = 0.08;
-      }
+    const onEnded = () => {
+      v.currentTime = 0;
+      v.play().catch(() => {});
     };
 
-    v.addEventListener("timeupdate", onTimeUpdate);
-    return () => v.removeEventListener("timeupdate", onTimeUpdate);
+    v.addEventListener("ended", onEnded);
+    return () => v.removeEventListener("ended", onEnded);
   }, [showVideo, prefersReducedMotion]);
 
   const showPosterOnly = prefersReducedMotion || !showVideo;
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#141414]">
+    <section className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#141414]">
       <div className="absolute inset-0 z-0 bg-[#141414]" aria-hidden />
       {showPosterOnly && (
         <>
@@ -88,6 +88,7 @@ export default function HeroSection() {
             }`}
             autoPlay
             muted
+            loop
             playsInline
             preload="auto"
             poster="/hero-frame.jpg"
@@ -115,18 +116,20 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="relative z-10 flex h-full items-center">
-        <Container>
-          <div className="max-w-3xl text-white">
+      <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col items-center justify-center text-center">
+        <Container className="w-full">
+          <div className="mx-auto max-w-3xl text-white">
             <h1 className="text-h1 mb-6 tracking-tight">
               Crafting Digital Excellence
             </h1>
-            <p className="text-body mb-8 max-w-xl text-white/80">
+            <p className="text-body mx-auto mb-8 max-w-xl text-white/80">
               We create minimal, powerful experiences that resonate.
             </p>
-            <Link href="/contact">
-              <Button variant="primary">Start a Project</Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/contact">
+                <Button variant="primary">Start a Project</Button>
+              </Link>
+            </div>
           </div>
         </Container>
       </div>
