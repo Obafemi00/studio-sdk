@@ -70,26 +70,6 @@ export const projects: Project[] = [
   },
   {
     id: "4",
-    title: "Slimelife | Walmart Launch",
-    mediaType: "video",
-    mediaSrc: "https://youtube.com/shorts/umtuTjLDDEE",
-    slug: "slimelife-walmart-launch",
-    heroMediaType: "video",
-    heroMediaSrc: "https://youtube.com/shorts/umtuTjLDDEE",
-    gallery: [],
-  },
-  {
-    id: "5",
-    title: "Azazie | Bridal FOOH CGI",
-    mediaType: "video",
-    mediaSrc: "https://www.youtube.com/shorts/KrLamtQ04SI",
-    slug: "azazie-bridal-fooh-cgi",
-    heroMediaType: "video",
-    heroMediaSrc: "https://www.youtube.com/shorts/KrLamtQ04SI",
-    gallery: [],
-  },
-  {
-    id: "6",
     title: "LYS Beauty | Airbrush Concealer",
     mediaType: "image",
     mediaSrc: "/work/LYS BEAUTY - AIRBRUSH CONCEALER/Still_1.png",
@@ -105,14 +85,32 @@ export const projects: Project[] = [
       { id: "6", mediaType: "image", mediaSrc: "/work/LYS BEAUTY - AIRBRUSH CONCEALER/StyleFrame2.png", alt: "LYS Beauty Airbrush Concealer image 6" },
     ],
   },
+  {
+    id: "5",
+    title: "Slimelife | Walmart Launch",
+    mediaType: "video",
+    mediaSrc: "https://youtube.com/shorts/umtuTjLDDEE",
+    slug: "slimelife-walmart-launch",
+    heroMediaType: "video",
+    heroMediaSrc: "https://youtube.com/shorts/umtuTjLDDEE",
+    gallery: [],
+  },
+  {
+    id: "6",
+    title: "Azazie | Bridal FOOH CGI",
+    mediaType: "video",
+    mediaSrc: "https://www.youtube.com/shorts/KrLamtQ04SI",
+    slug: "azazie-bridal-fooh-cgi",
+    heroMediaType: "video",
+    heroMediaSrc: "https://www.youtube.com/shorts/KrLamtQ04SI",
+    gallery: [],
+  },
 ];
 
-// Get project by slug
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
-// Get project index by slug
 export function getProjectIndex(slug: string): number {
   return projects.findIndex((p) => p.slug === slug);
 }

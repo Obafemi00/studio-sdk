@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 
 export default function PillNav() {
   const pathname = usePathname();
@@ -42,15 +41,15 @@ export default function PillNav() {
       className="fixed bottom-0 left-1/2 z-50 -translate-x-1/2 pb-safe pb-4 sm:pb-6"
       style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
     >
-      <div className="flex items-center gap-1 rounded-full bg-[#2B2B2B] px-4 py-2 shadow-lg sm:gap-2 sm:px-6">
+      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-[#2B2B2B]/80 px-3 py-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl backdrop-saturate-150 sm:gap-1.5 sm:px-5 sm:py-2.5">
         <Link
           href="/"
           onClick={(e) => handleNavClick(e, "/")}
           onKeyDown={(e) => handleKeyDown(e, "/")}
-          className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors sm:px-4 sm:text-base ${
+          className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-10 sm:w-10 ${
             isActive("/")
-              ? "bg-[#4A4A4A]"
-              : "hover:bg-[#4A4A4A]/50"
+              ? "bg-white/15 ring-1 ring-white/20"
+              : "hover:bg-white/10"
           }`}
           aria-label="Home"
         >
@@ -63,22 +62,21 @@ export default function PillNav() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-4 w-4"
+            className="h-[18px] w-[18px] sm:h-5 sm:w-5"
           >
             <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
-          <span className="hidden sm:inline">Home</span>
         </Link>
 
         <Link
           href="/work"
           onClick={(e) => handleNavClick(e, "/work")}
           onKeyDown={(e) => handleKeyDown(e, "/work")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors sm:px-4 sm:text-base ${
+          className={`rounded-full px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 sm:px-5 sm:text-base ${
             isActive("/work")
-              ? "bg-[#4A4A4A]"
-              : "hover:bg-[#4A4A4A]/50"
+              ? "bg-white/15 ring-1 ring-white/20"
+              : "hover:bg-white/10"
           }`}
         >
           Work
@@ -88,10 +86,10 @@ export default function PillNav() {
           href="/about"
           onClick={(e) => handleNavClick(e, "/about")}
           onKeyDown={(e) => handleKeyDown(e, "/about")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors sm:px-4 sm:text-base ${
+          className={`rounded-full px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 sm:px-5 sm:text-base ${
             isActive("/about")
-              ? "bg-[#4A4A4A]"
-              : "hover:bg-[#4A4A4A]/50"
+              ? "bg-white/15 ring-1 ring-white/20"
+              : "hover:bg-white/10"
           }`}
         >
           About
@@ -101,10 +99,10 @@ export default function PillNav() {
           href="/contact"
           onClick={(e) => handleNavClick(e, "/contact")}
           onKeyDown={(e) => handleKeyDown(e, "/contact")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors sm:px-4 sm:text-base ${
+          className={`rounded-full px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 sm:px-5 sm:text-base ${
             isActive("/contact")
-              ? "bg-[#4A4A4A]"
-              : "hover:bg-[#4A4A4A]/50"
+              ? "bg-white/15 ring-1 ring-white/20"
+              : "hover:bg-white/10"
           }`}
         >
           Contact

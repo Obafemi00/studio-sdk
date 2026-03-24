@@ -38,6 +38,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/hero-frame.jpg" as="image" type="image/jpeg" />
+        <link
+          rel="preload"
+          href="/client-logos/beauty-creations_BLACK.png"
+          as="image"
+          type="image/png"
+        />
+        <link
+          rel="preload"
+          href="/client-logos/beauty-creations.png"
+          as="image"
+          type="image/png"
+        />
+        <link
+          rel="preload"
+          href="/client-logos/Meta_lockup_positive%20primary_RGB.png"
+          as="image"
+          type="image/png"
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={`${inter.variable} ${playfairDisplay.variable} ${bodoniModa.variable} antialiased`}

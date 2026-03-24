@@ -14,7 +14,7 @@ function CtaContent({
   const isDark = variant === "dark";
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col items-center text-center px-6">
+    <div className="mx-auto flex max-w-5xl flex-col items-center text-center px-8">
       <h2
         className="font-display text-[clamp(56px,9vw,120px)] leading-[0.92] tracking-tight"
         style={{

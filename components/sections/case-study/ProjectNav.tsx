@@ -9,7 +9,7 @@ interface ProjectNavProps {
 
 export default function ProjectNav({ prevProject, nextProject }: ProjectNavProps) {
   return (
-    <section className="border-t border-[#E6E6E6] py-16 md:py-24">
+    <section className="border-t border-[#2B2B2B]/[0.08] bg-white py-24 md:py-32 lg:py-40">
       <Container>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {prevProject ? (

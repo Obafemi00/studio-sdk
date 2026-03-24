@@ -61,7 +61,7 @@ export default function AboutHero() {
         background: "radial-gradient(ellipse at center, #FAFAFA 0%, #F5F5F5 100%)",
       }}
     >
-      <Container className="py-24 md:py-32">
+      <Container className="py-28 md:py-36">
         <div className="grid grid-cols-12 gap-6 md:gap-8 lg:gap-12">
           {/* Left: Headline (col-span 6 on desktop, full on mobile/tablet) */}
           <div ref={headlineRef} className="col-span-12 flex flex-col justify-center md:col-span-6 lg:col-span-6">

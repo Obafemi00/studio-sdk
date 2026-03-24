@@ -122,7 +122,7 @@ export default function BigCtaScrollSection() {
         ref={pinRef}
         className="relative z-10 flex min-h-screen items-center justify-center"
       >
-        <div className="mx-auto flex max-w-5xl flex-col items-center text-center px-6">
+        <div className="mx-auto flex max-w-5xl flex-col items-center text-center px-8">
           <h2
             ref={headlineRef}
             className="font-display text-[clamp(56px,9vw,120px)] leading-[0.92] tracking-tight"

@@ -17,17 +17,28 @@
   --color-sdk-gray-100: var(--sdk-gray-100);
 }
 
+html {
+  background: #ffffff;
+  overscroll-behavior: none;
+}
+
 html,
 body {
   overflow-x: hidden;
 }
 
 body {
-  background: var(--sdk-white);
+  min-height: 100%;
+  background: #ffffff;
+  overscroll-behavior: none;
   color: var(--sdk-dark);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+video {
+  object-fit: cover;
 }
 
 /* Typography Scale */

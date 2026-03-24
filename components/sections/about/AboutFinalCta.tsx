@@ -8,7 +8,7 @@ export default function AboutFinalCta() {
   const revealRef = useRevealOnScroll<HTMLElement>();
 
   return (
-    <section ref={revealRef} className="bg-white pb-24 pt-16 md:pb-32 md:pt-24 lg:pb-40 lg:pt-28">
+    <section ref={revealRef} className="bg-white pb-28 pt-24 md:pb-40 md:pt-32 lg:pb-44 lg:pt-36">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <h2
@@ -18,7 +18,7 @@ export default function AboutFinalCta() {
             Ready to elevate your product?
           </h2>
           <p className="mb-10 text-lg text-[#4A4A4A] md:text-xl">
-            Let's build cinematic product visuals that perform.
+            Let&apos;s build cinematic product visuals that perform.
           </p>
           <Link
             href="/contact"

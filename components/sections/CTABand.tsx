@@ -7,7 +7,7 @@ import { useRevealOnScroll } from "@/lib/useRevealOnScroll";
 
 export default function CTABand() {
   const revealRef = useRevealOnScroll<HTMLElement>();
-
+  
   return (
     <section ref={revealRef} className="bg-[#2B2B2B] py-16 md:py-24 lg:py-[96px] xl:py-[140px] text-white">
       <Container>
