@@ -35,16 +35,26 @@ export default function ClientsSection() {
               return (
                 <div
                   key={client.src}
-                  className="group flex min-w-0 w-full items-center justify-center"
+                  className={`group flex min-w-0 w-full items-center justify-center ${
+                    isBeauty ? "col-span-2 py-2 sm:col-span-1 sm:py-0" : ""
+                  }`}
                 >
                   <Image
                     src={client.src}
                     alt={client.alt}
-                    width={isMeta ? 120 : 160}
-                    height={isMeta ? 36 : 60}
+                    width={
+                      isMeta ? 120 : isBeauty ? 480 : 160
+                    }
+                    height={
+                      isMeta ? 36 : isBeauty ? 180 : 60
+                    }
                     priority={isMeta || isBeauty || index < 2}
                     className={`w-auto object-contain grayscale opacity-60 transition-all duration-300 group-hover:scale-[1.02] group-hover:grayscale-0 group-hover:opacity-100 ${
-                      isMeta ? "h-9 max-w-[120px] md:h-10" : "h-[52px] max-w-[160px] md:h-[60px]"
+                      isMeta
+                        ? "h-9 max-w-[120px] md:h-10"
+                        : isBeauty
+                          ? "max-h-[min(22vw,100px)] max-w-[min(92vw,320px)] sm:max-h-[min(18vw,120px)] sm:max-w-[min(85vw,280px)] md:max-h-[156px] md:max-w-[min(100%,300px)] lg:max-h-[180px] lg:max-w-[min(100%,400px)]"
+                          : "h-[52px] max-w-[160px] md:h-[60px]"
                     }`}
                   />
                 </div>

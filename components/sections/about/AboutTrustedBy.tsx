@@ -41,20 +41,35 @@ export default function AboutTrustedBy() {
           >
             {clients.map((client) => {
               const isMeta = client.name === "Meta";
+              const isBeauty = client.name === "Beauty Creations";
               return (
                 <div
                   key={client.logo}
-                  className="flex min-h-[4.5rem] items-center justify-center px-2"
+                  className={`flex items-center justify-center px-2 ${
+                    isBeauty
+                      ? "min-h-[7rem] col-span-2 sm:col-span-1 sm:min-h-[4.5rem] lg:min-h-[5.5rem]"
+                      : "min-h-[4.5rem]"
+                  }`}
                 >
-                  <div className="group flex h-12 w-full max-w-[140px] items-center justify-center md:h-14">
+                  <div
+                    className={`group flex w-full items-center justify-center ${
+                      isBeauty
+                        ? "max-w-[min(92vw,360px)] sm:max-w-full"
+                        : "h-12 max-w-[140px] md:h-14"
+                    }`}
+                  >
                     <Image
                       src={client.logo}
                       alt={client.name}
-                      width={isMeta ? 120 : 160}
-                      height={isMeta ? 36 : 64}
-                      priority={isMeta || client.name === "Beauty Creations"}
+                      width={isMeta ? 120 : isBeauty ? 480 : 160}
+                      height={isMeta ? 36 : isBeauty ? 180 : 64}
+                      priority={isMeta || isBeauty}
                       className={`w-auto max-w-full object-contain opacity-55 grayscale transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 ${
-                        isMeta ? "h-9 max-h-10 md:h-10" : "h-10 max-h-12 md:h-12"
+                        isMeta
+                          ? "h-9 max-h-10 md:h-10"
+                          : isBeauty
+                            ? "max-h-[min(22vw,96px)] sm:max-h-[120px] md:max-h-[150px] lg:max-h-[180px]"
+                            : "h-10 max-h-12 md:h-12"
                       }`}
                     />
                   </div>
