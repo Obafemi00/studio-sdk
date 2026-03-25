@@ -11,10 +11,11 @@ export default function Button({
   className = "",
   ...props
 }: ButtonProps) {
-  const baseStyles = "px-6 py-3 rounded-sm transition-colors duration-200 font-medium text-base";
+  const baseStyles =
+    "px-6 py-3 rounded-sm transition-colors duration-[var(--duration-fast)] ease-[var(--ease-premium)] font-medium text-base";
   
   const variantStyles = {
-    primary: "bg-[#2B2B2B] text-white hover:bg-[#3A3A3A]",
+    primary: "bg-[#2B2B2B] text-white hover:bg-[#4A4A4A]",
     secondary: "border border-[#2B2B2B] text-[#2B2B2B] hover:bg-[#F7F7F7]",
   };
 

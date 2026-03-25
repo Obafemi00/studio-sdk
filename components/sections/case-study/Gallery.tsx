@@ -83,8 +83,8 @@ export default function Gallery({ items }: GalleryProps) {
               <div
                 key={item.id}
                 data-gallery-item-id={item.id}
-                className={`gallery-item transition-transform duration-500 ease-out will-change-transform ${
-                  prefersReducedMotion ? "scale-100" : isActive ? "scale-100" : "scale-[0.95]"
+                className={`gallery-item transition-transform duration-[var(--duration-medium)] ease-[var(--ease-premium)] will-change-transform ${
+                  prefersReducedMotion ? "scale-100" : isActive ? "scale-100" : "scale-[0.96]"
                 }`}
               >
                 <Image

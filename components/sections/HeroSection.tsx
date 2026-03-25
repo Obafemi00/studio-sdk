@@ -9,6 +9,9 @@ import { useReducedMotion } from "@/lib/motion";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subtextRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [showVideo, setShowVideo] = useState(false);
   const [posterFailed, setPosterFailed] = useState(false);
@@ -42,6 +45,47 @@ export default function HeroSection() {
     v.muted = true;
     v.play().catch(() => {});
   }, [showVideo, prefersReducedMotion]);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    const subtext = subtextRef.current;
+    const cta = ctaRef.current;
+    if (!heading || !subtext || !cta) return;
+
+    if (prefersReducedMotion) {
+      [heading, subtext, cta].forEach((el) => {
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      });
+      return;
+    }
+
+    [heading, subtext, cta].forEach((el) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+      el.style.transition =
+        "opacity var(--duration-slow, 1s) var(--ease-premium, cubic-bezier(0.22, 1, 0.36, 1)), transform var(--duration-slow, 1s) var(--ease-premium, cubic-bezier(0.22, 1, 0.36, 1))";
+    });
+
+    const headingId = window.setTimeout(() => {
+      heading.style.opacity = "1";
+      heading.style.transform = "translateY(0)";
+    }, 80);
+    const subtextId = window.setTimeout(() => {
+      subtext.style.opacity = "1";
+      subtext.style.transform = "translateY(0)";
+    }, 180);
+    const ctaId = window.setTimeout(() => {
+      cta.style.opacity = "1";
+      cta.style.transform = "translateY(0)";
+    }, 300);
+
+    return () => {
+      window.clearTimeout(headingId);
+      window.clearTimeout(subtextId);
+      window.clearTimeout(ctaId);
+    };
+  }, [prefersReducedMotion]);
 
   // Failsafe if native loop does not fire or stalls
   useEffect(() => {
@@ -119,13 +163,13 @@ export default function HeroSection() {
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col items-center justify-center text-center">
         <Container className="w-full">
           <div className="mx-auto max-w-3xl text-white">
-            <h1 className="text-h1 mb-6 tracking-tight">
+            <h1 ref={headingRef} className="text-h1 mb-6 tracking-tight">
               Crafting Digital Excellence
             </h1>
-            <p className="text-body mx-auto mb-8 max-w-xl text-white/80">
+            <p ref={subtextRef} className="text-body mx-auto mb-8 max-w-xl text-white/80">
               We create minimal, powerful experiences that resonate.
             </p>
-            <div className="flex justify-center">
+            <div ref={ctaRef} className="flex justify-center">
               <Link href="/contact">
                 <Button variant="primary">Start a Project</Button>
               </Link>

@@ -12,6 +12,7 @@ interface PageTransitionProps {
 
 export default function PageTransition({ children }: PageTransitionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const prefersReducedMotion = useReducedMotion();
 
@@ -23,33 +24,42 @@ export default function PageTransition({ children }: PageTransitionProps) {
     if (!containerRef.current || prefersReducedMotion) return;
 
     const container = containerRef.current;
+    const overlay = overlayRef.current;
 
-    // Animate in (opacity only to avoid transforms on scroll ancestors)
-    gsap.fromTo(
+    gsap.killTweensOf(container);
+    if (overlay) gsap.killTweensOf(overlay);
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    if (overlay) {
+      tl.set(overlay, { opacity: 0 })
+        .to(overlay, { opacity: 0.12, duration: 0.22 })
+        .to(overlay, { opacity: 0, duration: 0.34 }, ">-0.02");
+    }
+
+    tl.fromTo(
       container,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out",
-      }
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.78, ease: "power3.out" },
+      0
     );
 
     return () => {
-      // Animate out on route change (opacity only)
-      if (container) {
-        gsap.to(container, {
-          opacity: 0,
-          duration: 0.4,
-          ease: "power2.out",
-        });
-      }
+      gsap.to(container, { opacity: 0, duration: 0.36, ease: "power2.out" });
     };
   }, [pathname, prefersReducedMotion]);
 
   return (
-    <div ref={containerRef} style={{ opacity: prefersReducedMotion ? 1 : 0 }}>
-      {children}
+    <div className="relative">
+      <div
+        ref={overlayRef}
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-40 bg-[#2B2B2B]"
+        style={{ opacity: 0 }}
+      />
+      <div ref={containerRef} style={{ opacity: prefersReducedMotion ? 1 : 0 }}>
+        {children}
+      </div>
     </div>
   );
 }

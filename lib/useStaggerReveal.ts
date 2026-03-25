@@ -31,7 +31,8 @@ export function useStaggerReveal<T extends HTMLElement = HTMLDivElement>(
     children.forEach((child) => {
       child.style.opacity = "0";
       child.style.transform = "translateY(16px)";
-      child.style.transition = "opacity 0.9s ease-out, transform 0.9s ease-out";
+      child.style.transition =
+        "opacity var(--duration-slow, 1s) var(--ease-premium, cubic-bezier(0.22, 1, 0.36, 1)), transform var(--duration-slow, 1s) var(--ease-premium, cubic-bezier(0.22, 1, 0.36, 1))";
     });
 
     const observer = new IntersectionObserver(
