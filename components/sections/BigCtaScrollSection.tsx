@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerScrollTrigger } from "@/lib/gsap";
@@ -14,8 +14,18 @@ export default function BigCtaScrollSection() {
   const supportRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
     if (prefersReducedMotion || !sectionRef.current || !pinRef.current) return;
 
     registerScrollTrigger();
@@ -50,8 +60,9 @@ export default function BigCtaScrollSection() {
           start: "top top",
           end: "+=140%",
           scrub: true,
-          pin: pinRef.current,
-          anticipatePin: 1,
+          pin: !isMobile ? pinRef.current : false,
+          pinSpacing: true,
+          anticipatePin: !isMobile ? 1 : 0,
           invalidateOnRefresh: true,
         },
       });
@@ -102,7 +113,7 @@ export default function BigCtaScrollSection() {
     return () => {
       ctx.revert();
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, isMobile]);
 
   return (
     <section

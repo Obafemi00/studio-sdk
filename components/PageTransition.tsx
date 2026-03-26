@@ -3,6 +3,7 @@
 import { useEffect, useRef, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/lib/motion";
 import { registerScrollTrigger } from "@/lib/gsap";
 
@@ -19,6 +20,23 @@ export default function PageTransition({ children }: PageTransitionProps) {
   useEffect(() => {
     registerScrollTrigger();
   }, []);
+
+  // Global ScrollTrigger refresh to avoid stuck mobile state after load/resize.
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const t = window.setTimeout(() => handleResize(), 300);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (!containerRef.current || prefersReducedMotion) return;

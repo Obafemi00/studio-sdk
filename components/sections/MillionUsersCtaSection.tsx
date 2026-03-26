@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerScrollTrigger } from "@/lib/gsap";
@@ -65,7 +65,7 @@ export default function MillionUsersCtaSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (prefersReducedMotion) return;
     if (!sectionRef.current) return;
 

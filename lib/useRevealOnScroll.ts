@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, RefObject } from "react";
+import { useEffect, useRef, RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerScrollTrigger } from "./gsap";
@@ -12,7 +12,7 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
   const ref = useRef<T | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!enabled || prefersReducedMotion || !ref.current) return;
     
     registerScrollTrigger();

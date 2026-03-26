@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Container from "@/components/ui/Container";
@@ -12,7 +12,7 @@ export default function GiantWordmarkSection() {
   const wordmarkRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (prefersReducedMotion || !containerRef.current) return;
 
     registerScrollTrigger();
