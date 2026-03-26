@@ -66,7 +66,8 @@ export default function RootLayout({
           fontFamily: "var(--font-body)",
         }}
       >
-        {children}
+        {/* Clip horizontal bleed without iOS scroll bugs from overflow-x on html/body */}
+        <div className="overflow-x-clip">{children}</div>
         <PillNav />
       </body>
     </html>

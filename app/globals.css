@@ -24,11 +24,8 @@
 html {
   background: #ffffff;
   overscroll-behavior: none;
-}
-
-html,
-body {
-  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -45,6 +42,8 @@ body {
 
 body {
   min-height: 100%;
+  height: auto;
+  overflow-y: auto;
   background: #ffffff;
   overscroll-behavior: none;
   color: var(--sdk-dark);
@@ -145,6 +144,9 @@ main {
   scroll-snap-type: x mandatory;
   padding: 80px 0;
   scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

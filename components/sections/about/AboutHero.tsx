@@ -56,7 +56,7 @@ export default function AboutHero() {
 
   return (
     <section 
-      className="relative flex min-h-screen items-center overflow-hidden pb-24"
+      className="relative flex min-h-screen items-center overflow-x-clip overflow-y-visible pb-24"
       style={{
         background: "radial-gradient(ellipse at center, #FAFAFA 0%, #F5F5F5 100%)",
       }}

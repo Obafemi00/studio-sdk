@@ -12,8 +12,8 @@ const clientLogos = [
 
 export default function ClientsSection() {
   return (
-    <section className="relative min-h-screen overflow-x-hidden bg-[#F6F4EF]">
-      <Container className="flex min-h-screen max-w-[1200px] flex-col overflow-x-hidden py-20 md:py-28">
+    <section className="relative min-h-screen overflow-x-clip bg-[#F6F4EF]">
+      <Container className="flex min-h-screen max-w-[1200px] flex-col overflow-x-clip py-20 md:py-28">
         <header className="pt-4 md:pt-8">
           <h2 className="font-display text-3xl tracking-tight text-[#2B2B2B] md:text-4xl">
             Brands That Trust Us

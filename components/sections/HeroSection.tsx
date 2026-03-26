@@ -105,7 +105,7 @@ export default function HeroSection() {
   const showPosterOnly = prefersReducedMotion || !showVideo;
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#141414]">
+    <section className="relative flex min-h-screen w-full flex-col overflow-x-clip overflow-y-visible bg-[#141414]">
       <div className="absolute inset-0 z-0 bg-[#141414]" aria-hidden />
       {showPosterOnly && (
         <>
