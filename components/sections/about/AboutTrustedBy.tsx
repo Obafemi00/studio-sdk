@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { useStaggerReveal } from "@/lib/useStaggerReveal";
 
@@ -37,33 +36,43 @@ export default function AboutTrustedBy() {
           </p>
           <div
             ref={staggerRef}
-            className="grid grid-cols-2 gap-x-10 gap-y-12 sm:grid-cols-3 lg:grid-cols-6"
+            className="grid grid-cols-2 gap-y-12 gap-x-10 place-items-center md:grid-cols-3"
           >
             {clients.map((client) => {
-              const isMeta = client.name === "Meta";
-              const isBeauty = client.name === "Beauty Creations";
+              {/* 
+                IMPORTANT:
+                Do NOT remove individual scale values.
+                Logos are visually normalized manually.
+                Changing to uniform scaling will break visual balance.
+              */}
+              const scaleClass =
+                client.name === "Walmart"
+                  ? "scale-[0.9]"
+                  : client.name === "Popeyes"
+                    ? "scale-[0.9]"
+                    : client.name === "Canva"
+                      ? "scale-[1.05]"
+                      : client.name === "Beauty Creations"
+                        ? "scale-[2]"
+                        : client.name === "LYS Beauty"
+                          ? "scale-[0.95]"
+                          : "";
+
               return (
-                <div key={client.logo} className="flex min-h-[5rem] items-center justify-center px-2 md:min-h-[5.5rem]">
-                  <div
-                    className={`group flex w-full items-center justify-center ${
-                      isBeauty ? "max-w-none" : "h-12 max-w-[152px] md:h-14"
-                    }`}
-                  >
-                    <Image
-                      src={client.logo}
-                      alt={client.name}
-                      width={isMeta ? 128 : isBeauty ? 480 : 160}
-                      height={isMeta ? 40 : isBeauty ? 180 : 64}
-                      priority={isMeta || isBeauty}
-                      className={`w-auto object-contain opacity-70 grayscale transition-[opacity] duration-[var(--duration-fast)] ease-[var(--ease-premium)] group-hover:opacity-100 ${
-                        isMeta
-                          ? "h-9 max-h-10 md:h-10"
-                          : isBeauty
-                            ? "max-h-[min(22vw,100px)] max-w-[min(92vw,320px)] sm:max-h-[min(18vw,120px)] sm:max-w-[min(85vw,280px)] md:max-h-[156px] md:max-w-[min(100%,300px)] lg:max-h-[180px] lg:max-w-[min(100%,400px)]"
-                            : "h-10 max-h-12 md:h-12"
-                      }`}
-                    />
-                  </div>
+                <div
+                  key={client.logo}
+                  className={`h-12 md:h-14 flex items-center justify-center ${
+                    client.name === "Beauty Creations" ? "overflow-visible" : ""
+                  }`}
+                >
+                  <img
+                    src={client.logo}
+                    alt={client.name}
+                    className={`max-h-full w-auto object-contain grayscale opacity-70 transition-[opacity,filter,transform] duration-[var(--duration-fast)] ease-[var(--ease-premium)] group-hover:opacity-100 group-hover:grayscale-0 ${scaleClass}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
                 </div>
               );
             })}

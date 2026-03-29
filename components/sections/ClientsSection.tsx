@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Container from "@/components/ui/Container";
 
 const clientLogos = [
@@ -12,51 +11,57 @@ const clientLogos = [
 
 export default function ClientsSection() {
   return (
-    <section className="relative min-h-screen overflow-x-clip bg-[#F6F4EF]">
-      <Container className="flex min-h-screen max-w-[1200px] flex-col overflow-x-clip py-20 md:py-28">
+    <section className="relative overflow-x-clip bg-[#F6F4EF]">
+      <Container className="flex max-w-[1200px] flex-col overflow-x-clip py-24 md:py-32">
         <header className="pt-4 md:pt-8">
           <h2 className="font-display text-3xl tracking-tight text-[#2B2B2B] md:text-4xl">
             Brands That Trust Us
           </h2>
         </header>
 
-        <div className="mt-16 flex flex-1 flex-col items-center justify-center md:mt-24">
+        <div className="mt-16 flex flex-col items-center md:mt-24">
           <div
-            className="grid w-full max-w-4xl grid-cols-2 items-center justify-items-center md:grid-cols-3"
-            style={{
-              rowGap: "3rem",
-              columnGap: "4rem",
-              minWidth: 0,
-            }}
+            className="grid max-w-4xl w-full grid-cols-2 gap-y-12 gap-x-10 place-items-center md:grid-cols-3"
           >
             {clientLogos.map((client, index) => {
-              const isMeta = client.alt === "Meta";
-              const isBeauty = client.alt === "Beauty Creations";
+              {/* 
+                IMPORTANT:
+                Do NOT remove individual scale values.
+                Logos are visually normalized manually.
+                Changing to uniform sizing will break visual balance.
+              */}
+              const scaleClass =
+                client.alt === "Walmart"
+                  ? "scale-[0.9]"
+                  : client.alt === "Popeyes"
+                    ? "scale-[0.9]"
+                    : client.alt === "Canva"
+                      ? "scale-[1.05]"
+                      : client.alt === "Beauty Creations"
+                        ? "scale-[2]"
+                        : client.alt === "LYS Beauty"
+                          ? "scale-[0.95]"
+                          : "";
+
               return (
                 <div
                   key={client.src}
-                  className={`group flex min-w-0 w-full items-center justify-center ${
-                    isBeauty ? "col-span-2 py-2 sm:col-span-1 sm:py-0" : ""
-                  }`}
+                  className="group flex items-center justify-center"
                 >
-                  <Image
-                    src={client.src}
-                    alt={client.alt}
-                    width={
-                      isMeta ? 120 : isBeauty ? 480 : 160
-                    }
-                    height={
-                      isMeta ? 36 : isBeauty ? 180 : 60
-                    }
-                    priority={isMeta || isBeauty || index < 2}
-                    className={`w-auto object-contain grayscale opacity-60 transition-all duration-300 group-hover:scale-[1.02] group-hover:grayscale-0 group-hover:opacity-100 ${
-                      isMeta
-                        ? "h-9 max-w-[120px] md:h-10"
-                        : isBeauty
-                          ? "max-h-[min(22vw,100px)] max-w-[min(92vw,320px)] sm:max-h-[min(18vw,120px)] sm:max-w-[min(85vw,280px)] md:max-h-[156px] md:max-w-[min(100%,300px)] lg:max-h-[180px] lg:max-w-[min(100%,400px)]"
-                          : "h-[52px] max-w-[160px] md:h-[60px]"
+                  <div
+                    className={`h-12 md:h-14 flex items-center justify-center ${
+                      client.alt === "Beauty Creations" ? "overflow-visible" : ""
                     }`}
-                  />
+                  >
+                    <img
+                      src={client.src}
+                      alt={client.alt}
+                      className={`max-h-full w-auto object-contain grayscale opacity-60 transition-[opacity,filter,transform] duration-[var(--duration-fast)] ease-[var(--ease-premium)] group-hover:opacity-100 group-hover:grayscale-0 ${scaleClass}`}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      decoding="async"
+                      draggable={false}
+                    />
+                  </div>
                 </div>
               );
             })}
