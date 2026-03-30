@@ -12,6 +12,15 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+function formatMetadata(title: string) {
+  const parts = title.split("|").map((part) => part.trim());
+  if (parts.length === 2) {
+    return `${parts[0]} · 2024 · ${parts[1]}`;
+  }
+
+  return "CLIENT · YEAR · CATEGORY";
+}
+
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -36,43 +45,24 @@ export default async function CaseStudyPage({ params }: PageProps) {
         ? firstVideoInGallery.mediaSrc
         : null;
 
-  const imageGalleryItems = galleryItems.filter((item) => item.mediaType === "image");
-  const hasImages = imageGalleryItems.length > 0;
+  const hasImages = galleryItems.length > 0;
   const hasVideo = Boolean(detailVideoSrc);
+  const metadata = formatMetadata(project.title);
+  const heroMediaType = project.youtube ? "video" : project.heroMediaType ?? project.mediaType;
+  const heroMediaSrc = project.youtube ?? project.heroMediaSrc ?? project.mediaSrc;
+  const heroMediaIsShort = project.isShort ?? false;
 
   return (
     <>
       <PageTransition>
         <main>
-          {/* Video-only: title + cinematic embed (no image gallery) */}
-          {hasVideo && !hasImages ? (
-            <>
-              <ProjectInfo title={project.title} />
-              <ProjectVideoSection videoSrc={detailVideoSrc!} title={project.title} />
-            </>
-          ) : null}
+          <HeroMedia mediaType={heroMediaType} mediaSrc={heroMediaSrc} alt={project.title} isShort={heroMediaIsShort} />
+          <ProjectInfo title={project.title} metadata={metadata} />
 
-          {/* Title → YouTube → images */}
-          {hasImages ? (
-            <>
-              <ProjectInfo title={project.title} />
-              {hasVideo && detailVideoSrc ? (
-                <ProjectVideoSection videoSrc={detailVideoSrc} title={project.title} />
-              ) : null}
-              {imageGalleryItems.length > 0 ? <Gallery items={imageGalleryItems} /> : null}
-            </>
-          ) : null}
+          {hasImages && <Gallery items={galleryItems} />}
 
-          {/* Stills-only edge case */}
-          {!hasImages && !hasVideo ? (
-            <>
-              <HeroMedia
-                mediaType={project.heroMediaType || project.mediaType}
-                mediaSrc={project.heroMediaSrc || project.mediaSrc}
-                alt={project.title}
-              />
-              <ProjectInfo title={project.title} />
-            </>
+          {!hasImages && hasVideo && detailVideoSrc && heroMediaType !== "video" ? (
+            <ProjectVideoSection videoSrc={detailVideoSrc} title={project.title} />
           ) : null}
 
           <ProjectNav prevProject={prevProject} nextProject={nextProject} />

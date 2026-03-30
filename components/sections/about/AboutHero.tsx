@@ -1,109 +1,207 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef } from "react";
-import Container from "@/components/ui/Container";
-import AboutHeroVisual from "./AboutHeroVisual";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 import { useReducedMotion } from "@/lib/motion";
 
 export default function AboutHero() {
   const headlineRef = useRef<HTMLDivElement>(null);
-  const rightContentRef = useRef<HTMLDivElement>(null);
+  const sublineRef = useRef<HTMLDivElement>(null);
+  const videoOneRef = useRef<HTMLVideoElement>(null);
+  const videoTwoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const videoOne = videoOneRef.current;
+    const videoTwo = videoTwoRef.current;
+    let timeoutId: number | undefined;
+
+    const handleMetadata = () => {
+      if (videoOne?.duration && videoTwo) {
+        const delayMs = (videoOne.duration / 2) * 1000;
+        timeoutId = window.setTimeout(() => {
+          if (videoTwo) {
+            videoTwo.currentTime = 0;
+            videoTwo.play().catch(() => {});
+          }
+        }, delayMs);
+      }
+    };
+
+    videoOne?.addEventListener("loadedmetadata", handleMetadata);
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      videoOne?.removeEventListener("loadedmetadata", handleMetadata);
+    };
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      // Show everything immediately
       if (headlineRef.current) {
         headlineRef.current.style.opacity = "1";
         headlineRef.current.style.transform = "translateY(0)";
       }
-      if (rightContentRef.current) {
-        rightContentRef.current.style.opacity = "1";
-        rightContentRef.current.style.transform = "translateY(0)";
+      if (sublineRef.current) {
+        sublineRef.current.style.opacity = "1";
+        sublineRef.current.style.transform = "translateY(0)";
       }
       return;
     }
 
-    // Animate headline
+    const tl = gsap.timeline();
+
     if (headlineRef.current) {
-      headlineRef.current.style.opacity = "0";
-      headlineRef.current.style.transform = "translateY(16px)";
-      headlineRef.current.style.transition = "opacity 0.9s ease-out, transform 0.9s ease-out";
-      
-      setTimeout(() => {
-        if (headlineRef.current) {
-          headlineRef.current.style.opacity = "1";
-          headlineRef.current.style.transform = "translateY(0)";
-        }
-      }, 50);
+      gsap.set(headlineRef.current, { opacity: 0, y: 24 });
+      tl.fromTo(
+        headlineRef.current,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+      );
     }
 
-    // Animate right content (slightly delayed)
-    if (rightContentRef.current) {
-      rightContentRef.current.style.opacity = "0";
-      rightContentRef.current.style.transform = "translateY(16px)";
-      rightContentRef.current.style.transition = "opacity 0.9s ease-out, transform 0.9s ease-out";
-      
-      setTimeout(() => {
-        if (rightContentRef.current) {
-          rightContentRef.current.style.opacity = "1";
-          rightContentRef.current.style.transform = "translateY(0)";
-        }
-      }, 150);
+    if (sublineRef.current) {
+      gsap.set(sublineRef.current, { opacity: 0, y: 24 });
+      tl.fromTo(
+        sublineRef.current,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+        "+=0.2",
+      );
     }
+
+    return () => {
+      tl.kill();
+    };
   }, [prefersReducedMotion]);
 
   return (
-    <section 
-      className="relative flex min-h-screen items-center overflow-x-clip overflow-y-visible pb-24"
-      style={{
-        background: "radial-gradient(ellipse at center, #FAFAFA 0%, #F5F5F5 100%)",
-      }}
+    <section
+      className="relative h-screen w-screen min-h-screen overflow-hidden text-center"
+      style={{ backgroundColor: "#2B2B2B" }}
     >
-      <Container className="py-28 md:py-36">
-        <div className="grid grid-cols-12 gap-6 md:gap-8 lg:gap-12">
-          {/* Left: Headline (col-span 6 on desktop, full on mobile/tablet) */}
-          <div ref={headlineRef} className="col-span-12 flex flex-col justify-center md:col-span-6 lg:col-span-6">
-            <h1
-              className="mb-4 font-display tracking-tight leading-[0.9] text-[#2B2B2B]"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(56px, 7vw, 120px)",
-              }}
-            >
-              Studio SDK
-            </h1>
-            <h2
-              className="font-display tracking-tight text-[#4A4A4A]"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(32px, 4vw, 64px)",
-              }}
-            >
-              Premium CGI for products.
-            </h2>
-          </div>
-
-          {/* Center: Visual (col-span 3 on desktop, col-span-6 on tablet, full on mobile) */}
-          <div className="col-span-12 flex items-center justify-center md:col-span-6 md:col-start-7 lg:col-span-3 lg:col-start-7">
-            <AboutHeroVisual />
-          </div>
-
-          {/* Right: Supporting text + CTA (col-span 3 on desktop, full on tablet/mobile) */}
-          <div ref={rightContentRef} className="col-span-12 flex flex-col justify-center md:col-span-12 lg:col-span-3 lg:col-start-10">
-            <p className="mb-8 max-w-[22rem] text-lg leading-relaxed text-[#4A4A4A] md:text-xl">
-              We create cinematic CGI product films and stills that elevate perception, improve ad performance, and keep your content pipeline consistent.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex w-fit items-center justify-center rounded-full border border-[#2B2B2B] bg-white px-8 py-3 text-sm font-medium text-[#2B2B2B] transition-colors hover:bg-[#2B2B2B] hover:text-white"
-            >
-              Let's connect
-            </Link>
-          </div>
+      <video
+        ref={videoOneRef}
+        src="/Studio SDK Website Reel.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <video
+        ref={videoTwoRef}
+        src="/Studio SDK Website Reel.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute left-6 top-4 z-10 text-left">
+        <span
+          className="text-sm uppercase tracking-[0.3em] text-white"
+          style={{ fontFamily: "var(--sdk-font-display)" }}
+        >
+          STUDIO SDK
+        </span>
+      </div>
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-start px-6 pt-[40vh]">
+        <div
+          ref={headlineRef}
+          style={{
+            fontFamily: "var(--sdk-font-display)",
+            fontSize: "clamp(40px, 6vw, 72px)",
+            lineHeight: 1.1,
+            letterSpacing: "0.02em",
+            fontWeight: 400,
+            color: "#FFFFFF",
+            maxWidth: "900px",
+            margin: "0 auto",
+            opacity: 0,
+            transform: "translateY(24px)",
+          }}
+        >
+          We make products
+          <br />
+          impossible to ignore.
         </div>
-      </Container>
+
+        <p
+          ref={sublineRef}
+          style={{
+            fontFamily: "var(--sdk-font-body)",
+            fontSize: "11px",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            color: "#FFFFFF",
+            marginTop: "32px",
+            opacity: 0,
+            transform: "translateY(24px)",
+          }}
+        >
+          CGI · PRODUCT FILM · VISUAL IDENTITY
+        </p>
+      </div>
+
+      <div
+        className="pointer-events-none absolute bottom-[40px] left-1/2 z-10 flex flex-col items-center gap-2"
+        style={{ transform: "translateX(-50%)", opacity: scrolled ? 0 : 1, transition: "opacity 0.6s ease" }}
+      >
+        <span
+          className="text-[11px] uppercase tracking-[0.2em] text-white"
+          style={{ fontFamily: "var(--sdk-font-body)", opacity: 0.7 }}
+        >
+          scroll
+        </span>
+        <div
+          className="animate-scrollPulse"
+          style={{
+            width: "1px",
+            height: "48px",
+            background: "linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0))",
+          }}
+        />
+      </div>
+
+      <style jsx>{`
+        .animate-scrollPulse {
+          animation: scrollPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+          0% {
+            transform: scaleY(0);
+            transform-origin: top;
+            opacity: 1;
+          }
+
+          100% {
+            transform: scaleY(1);
+            transform-origin: top;
+            opacity: 0;
+          }
+        }
+      `}</style>
     </section>
   );
 }

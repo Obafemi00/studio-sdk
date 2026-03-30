@@ -6,6 +6,8 @@ export interface Project {
   slug: string;
   heroMediaType?: "image" | "video";
   heroMediaSrc?: string;
+  youtube?: string;
+  isShort?: boolean;
   gallery?: Array<{
     id: string;
     mediaType: "image" | "video";
@@ -24,6 +26,7 @@ export const projects: Project[] = [
     slug: "urban-decay-lips",
     heroMediaType: "image",
     heroMediaSrc: "/work/URBAN DECAY - LIPS/UrbanDecay_Behance_1.jpg",
+    youtube: "SvSlnNKGHm4",
     gallery: [
       { id: "1", mediaType: "image", mediaSrc: "/work/URBAN DECAY - LIPS/UrbanDecay_Behance_1.jpg", alt: "Urban Decay Lips image 1" },
       { id: "2", mediaType: "image", mediaSrc: "/work/URBAN DECAY - LIPS/UrbanDecay_Behance_2.jpg", alt: "Urban Decay Lips image 2" },
@@ -40,6 +43,7 @@ export const projects: Project[] = [
     slug: "clior-uk-all-in-one-multivitamins",
     heroMediaType: "image",
     heroMediaSrc: "/work/CLIOR UK - ALL IN ONE MULTIVITAMINS/Clior_Behance_1.jpg",
+    youtube: "CJQG8qS7oxM",
     gallery: [
       { id: "1", mediaType: "image", mediaSrc: "/work/CLIOR UK - ALL IN ONE MULTIVITAMINS/Clior_Behance_1.jpg", alt: "Clior UK image 1" },
       { id: "2", mediaType: "image", mediaSrc: "/work/CLIOR UK - ALL IN ONE MULTIVITAMINS/Clior_Behance_2.jpg", alt: "Clior UK image 2" },
@@ -57,6 +61,7 @@ export const projects: Project[] = [
     slug: "lys-beauty-redefining-the-lipstick-x-lipliner",
     heroMediaType: "image",
     heroMediaSrc: "/work/LYS BEAUTY - Redefining the Lipstick x Lipliner/LIPS_Behance1.jpg",
+    youtube: "LacyJhTieRw",
     gallery: [
       { id: "1", mediaType: "image", mediaSrc: "/work/LYS BEAUTY - Redefining the Lipstick x Lipliner/Image 7.jpg", alt: "LYS Beauty lipstick x lipliner image 1" },
       { id: "2", mediaType: "image", mediaSrc: "/work/LYS BEAUTY - Redefining the Lipstick x Lipliner/Image 8.jpg", alt: "LYS Beauty lipstick x lipliner image 2" },
@@ -76,6 +81,7 @@ export const projects: Project[] = [
     slug: "lys-beauty-airbrush-concealer",
     heroMediaType: "image",
     heroMediaSrc: "/work/LYS BEAUTY - AIRBRUSH CONCEALER/Still_1.png",
+    youtube: "ROJLYDQEp9E",
     gallery: [
       { id: "1", mediaType: "image", mediaSrc: "/work/LYS BEAUTY - AIRBRUSH CONCEALER/Still_1.png", alt: "LYS Beauty Airbrush Concealer image 1" },
       { id: "2", mediaType: "image", mediaSrc: "/work/LYS BEAUTY - AIRBRUSH CONCEALER/Still_4.png", alt: "LYS Beauty Airbrush Concealer image 2" },
@@ -93,6 +99,8 @@ export const projects: Project[] = [
     slug: "slimelife-walmart-launch",
     heroMediaType: "video",
     heroMediaSrc: "https://youtube.com/shorts/umtuTjLDDEE",
+    youtube: "umtuTjLDDEE",
+    isShort: true,
     gallery: [],
   },
   {
@@ -103,6 +111,8 @@ export const projects: Project[] = [
     slug: "azazie-bridal-fooh-cgi",
     heroMediaType: "video",
     heroMediaSrc: "https://www.youtube.com/shorts/KrLamtQ04SI",
+    youtube: "KrLamtQ04SI",
+    isShort: true,
     gallery: [],
   },
 ];

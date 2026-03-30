@@ -13,7 +13,7 @@ export default function FeaturedWorkSection() {
   const revealRef = useRevealOnScroll<HTMLElement>();
 
   return (
-    <section ref={revealRef} className="py-20 md:py-24 lg:py-32">
+    <section ref={revealRef} className="py-16 md:py-20 lg:py-24 xl:py-32">
       <Container>
         <h2 className="text-h2 mb-12 tracking-tight md:mb-16">Featured Work</h2>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12">

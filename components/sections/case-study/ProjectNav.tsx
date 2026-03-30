@@ -9,40 +9,48 @@ interface ProjectNavProps {
 
 export default function ProjectNav({ prevProject, nextProject }: ProjectNavProps) {
   return (
-    <section className="border-t border-[#2B2B2B]/[0.08] bg-white py-24 md:py-32 lg:py-40">
+    <section className="bg-white py-12">
       <Container>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {prevProject ? (
-            <Link
-              href={`/work/${prevProject.slug}`}
-              className="group block transition-opacity duration-300 hover:opacity-60"
-            >
-              <div className="flex items-center gap-4">
-                <span className="text-h4 text-[#4A4A4A]">←</span>
-                <div>
-                  <p className="text-small mb-2 text-[#4A4A4A]">Previous Project</p>
-                  <h3 className="text-h3">{prevProject.title}</h3>
+        <nav className="border-t border-[#E6E6E6]">
+          <div className="flex justify-between items-start gap-4">
+            {prevProject ? (
+              <Link
+                href={`/work/${prevProject.slug}`}
+                className="block min-h-[44px] max-w-[48%]"
+              >
+                <div className="flex flex-col gap-1">
+                  <span className="text-[11px] uppercase tracking-[0.32em] font-sans text-[#4A4A4A]">
+                    Previous Project
+                  </span>
+                  <span className="flex items-center gap-2 text-[20px] font-display text-[#2B2B2B] leading-tight">
+                    <span>←</span>
+                    <span>{prevProject.title}</span>
+                  </span>
                 </div>
-              </div>
-            </Link>
-          ) : (
-            <div />
-          )}
-          {nextProject && (
-            <Link
-              href={`/work/${nextProject.slug}`}
-              className="group block transition-opacity duration-300 hover:opacity-60 md:ml-auto"
-            >
-              <div className="flex items-center justify-end gap-4">
-                <div className="text-right">
-                  <p className="text-small mb-2 text-[#4A4A4A]">Next Project</p>
-                  <h3 className="text-h3">{nextProject.title}</h3>
+              </Link>
+            ) : (
+              <div className="min-h-[44px] max-w-[48%]" />
+            )}
+            {nextProject ? (
+              <Link
+                href={`/work/${nextProject.slug}`}
+                className="block min-h-[44px] max-w-[48%]"
+              >
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-[11px] uppercase tracking-[0.32em] font-sans text-[#4A4A4A]">
+                    Next Project
+                  </span>
+                  <span className="flex items-center justify-end gap-2 text-[20px] font-display text-[#2B2B2B] leading-tight">
+                    <span>{nextProject.title}</span>
+                    <span>→</span>
+                  </span>
                 </div>
-                <span className="text-h4 text-[#4A4A4A]">→</span>
-              </div>
-            </Link>
-          )}
-        </div>
+              </Link>
+            ) : (
+              <div className="min-h-[44px] max-w-[48%]" />
+            )}
+          </div>
+        </nav>
       </Container>
     </section>
   );

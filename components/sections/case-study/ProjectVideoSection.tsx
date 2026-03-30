@@ -1,5 +1,5 @@
 import Container from "@/components/ui/Container";
-import YouTubePremiumFrame from "@/components/ui/YouTubePremiumFrame";
+import { buildYouTubeEmbedUrl } from "@/lib/youtube";
 
 interface ProjectVideoSectionProps {
   videoSrc: string;
@@ -7,11 +7,37 @@ interface ProjectVideoSectionProps {
 }
 
 export default function ProjectVideoSection({ videoSrc, title }: ProjectVideoSectionProps) {
+  const embedUrl = buildYouTubeEmbedUrl(videoSrc, {
+    autoplay: true,
+    mute: true,
+    loop: true,
+    controls: false,
+  });
+
   return (
-    <section className="bg-white py-24 md:py-32 lg:py-40">
+    <section className="bg-white py-16 md:py-24 lg:py-32">
       <Container>
-        <div className="mx-auto w-full max-w-4xl">
-          <YouTubePremiumFrame videoSrc={videoSrc} title={title} />
+        <div className="relative mx-auto h-[60vh] w-full max-w-[1280px] overflow-hidden bg-[#000]">
+          {embedUrl ? (
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="absolute inset-0 h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src={videoSrc} type="video/mp4" />
+            </video>
+          )}
         </div>
       </Container>
     </section>

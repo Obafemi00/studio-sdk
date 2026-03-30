@@ -52,7 +52,7 @@ export default function GiantWordmarkSection() {
   return (
     <section
       ref={containerRef}
-      className="flex min-h-[60vh] items-center justify-center bg-white py-24 md:py-32"
+      className="flex min-h-[60vh] items-center justify-center bg-white py-16 lg:py-24"
     >
       <Container>
         <div ref={wordmarkRef} className="text-center">

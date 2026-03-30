@@ -36,7 +36,8 @@ export default function AboutServices() {
               </p>
               <Link
                 href="/contact"
-                className="mt-10 inline-flex items-center justify-center rounded-full border border-[#2B2B2B] px-8 py-3 text-sm font-medium text-[#2B2B2B] transition-colors hover:bg-[#2B2B2B] hover:text-white"
+                className="mt-10 inline-flex items-center justify-center rounded-[4px] border border-[#2B2B2B] bg-transparent px-[32px] py-[14px] text-[14px] font-medium uppercase tracking-[0.05em] text-[#2B2B2B] transition-colors hover:bg-[#2B2B2B] hover:text-white"
+                style={{ fontFamily: "var(--sdk-font-body)" }}
               >
                 Contact
               </Link>

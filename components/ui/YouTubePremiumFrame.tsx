@@ -28,14 +28,12 @@ export default function YouTubePremiumFrame({
   if (!embedUrl) return null;
 
   return (
-    <div
-      className={`overflow-hidden rounded-2xl border border-[#2B2B2B]/[0.06] bg-black shadow-[0_20px_60px_-24px_rgba(0,0,0,0.25)] ${className}`}
-    >
-      <div className={`relative w-full ${innerClassName}`}>
+    <div className={`relative w-full aspect-video overflow-hidden rounded-none ${className}`}>
+      <div className={`relative w-full h-full ${innerClassName}`}>
         <iframe
           src={embedUrl}
           title={title}
-          className="absolute inset-0 h-full w-full"
+          className="pointer-events-none absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 border-none"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />

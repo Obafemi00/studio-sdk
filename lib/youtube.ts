@@ -31,6 +31,7 @@ export type YouTubeEmbedOptions = {
   mute?: boolean;
   loop?: boolean;
   controls?: boolean;
+  showInfo?: boolean;
 };
 
 /**
@@ -52,6 +53,7 @@ export function buildYouTubeEmbedUrl(
     mute = true,
     loop = true,
     controls = false,
+    showInfo = false,
   } = options;
 
   const params = new URLSearchParams({
@@ -69,6 +71,8 @@ export function buildYouTubeEmbedUrl(
   } else {
     params.set("loop", "0");
   }
+
+  params.set("showinfo", showInfo ? "1" : "0");
 
   return `https://www.youtube.com/embed/${id}?${params.toString()}`;
 }

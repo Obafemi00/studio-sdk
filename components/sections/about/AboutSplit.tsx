@@ -10,7 +10,7 @@ export default function AboutSplit() {
   const revealRef = useRevealOnScroll<HTMLElement>();
 
   return (
-    <section ref={revealRef} className="bg-white py-20 md:py-28 lg:py-32">
+    <section ref={revealRef} className="bg-white pt-16 pb-20 md:pt-24 md:pb-28 lg:pt-24 lg:pb-32">
       <Container>
         <div className="grid items-start gap-14 md:grid-cols-2 md:gap-16 lg:gap-20">
           <div className="md:max-w-xl md:pt-1">
