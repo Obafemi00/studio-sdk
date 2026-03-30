@@ -98,7 +98,7 @@ export default function AboutHero() {
     >
       <video
         ref={videoOneRef}
-        src="/Studio SDK Website Reel.mp4"
+        src="/reel.mp4"
         autoPlay
         muted
         loop
@@ -108,7 +108,7 @@ export default function AboutHero() {
       />
       <video
         ref={videoTwoRef}
-        src="/Studio SDK Website Reel.mp4"
+        src="/reel.mp4"
         autoPlay
         muted
         loop
