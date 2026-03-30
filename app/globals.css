@@ -23,7 +23,7 @@
 
 html {
   background: #ffffff;
-  overscroll-behavior: none;
+  overscroll-behavior: auto;
   overflow-y: auto;
   height: auto;
 }
@@ -45,7 +45,7 @@ body {
   height: auto;
   overflow-y: auto;
   background: #ffffff;
-  overscroll-behavior: none;
+  overscroll-behavior: auto;
   color: var(--sdk-dark);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
