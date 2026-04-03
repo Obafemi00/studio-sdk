@@ -5,7 +5,6 @@ import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { useRevealOnScroll } from "@/lib/useRevealOnScroll";
 import { projects } from "@/lib/projects";
-import { buildYouTubeEmbedUrl } from "@/lib/youtube";
 
 export default function PortfolioGridSection() {
   const revealRef = useRevealOnScroll<HTMLElement>();
@@ -16,16 +15,6 @@ export default function PortfolioGridSection() {
         <h1 className="text-h2 mb-12 tracking-tight md:mb-16">Work</h1>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12">
           {projects.map((item) => {
-            const youtubePreview =
-              item.mediaType === "video"
-                ? buildYouTubeEmbedUrl(item.mediaSrc, {
-                    autoplay: false,
-                    mute: true,
-                    loop: true,
-                    controls: false,
-                  })
-                : null;
-
             return (
               <Link
                 key={item.id}
@@ -41,14 +30,14 @@ export default function PortfolioGridSection() {
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                  ) : youtubePreview ? (
-                    <iframe
-                      src={youtubePreview}
-                      title={item.title}
-                      className="h-full w-full"
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
+                  ) : item.youtube ? (
+                    <Image
+                      src={`https://img.youtube.com/vi/${item.youtube}/maxresdefault.jpg`}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      unoptimized
                     />
                   ) : (
                     <video
