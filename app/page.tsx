@@ -3,7 +3,6 @@ import PageTransition from "@/components/PageTransition";
 import HeroSection from "@/components/sections/HeroSection";
 import FeaturedWorkSection from "@/components/sections/FeaturedWorkSection";
 import ClientsSection from "@/components/sections/ClientsSection";
-import MillionUsersCtaSection from "@/components/sections/MillionUsersCtaSection";
 import GiantWordmarkSection from "@/components/sections/GiantWordmarkSection";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
           <HeroSection />
           <FeaturedWorkSection />
           <ClientsSection />
-          <MillionUsersCtaSection />
           <GiantWordmarkSection/>
         </main> 
       </PageTransition>

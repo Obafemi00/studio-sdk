@@ -28,14 +28,6 @@ export default function Contact() {
                   <p className="mt-4 text-base font-normal leading-relaxed text-[#2B2B2B]/85 md:text-lg">
                     Availability: Worldwide, remote-first
                   </p>
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=United%20Kingdom"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 inline-block text-base font-medium text-[#2B2B2B] no-underline transition-[text-decoration-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-premium)] hover:underline hover:decoration-[#2B2B2B]/40 hover:underline-offset-[5px] hover:opacity-85 md:text-lg"
-                  >
-                    View map
-                  </a>
                 </div>
 
                 <div className="mt-10 md:mt-12">

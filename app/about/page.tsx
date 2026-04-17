@@ -1,7 +1,6 @@
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import AboutHero from "@/components/sections/about/AboutHero";
-import AboutPillars from "@/components/sections/about/AboutPillars";
 import AboutSplit from "@/components/sections/about/AboutSplit";
 import AboutServices from "@/components/sections/about/AboutServices";
 import AboutTrustedBy from "@/components/sections/about/AboutTrustedBy";
@@ -13,7 +12,6 @@ export default function About() {
       <PageTransition>
         <main>
           <AboutHero />
-          <AboutPillars />
           <AboutSplit />
           <AboutServices />
           <AboutTrustedBy />
